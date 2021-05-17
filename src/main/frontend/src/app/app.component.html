@@ -1,0 +1,135 @@
+<div class="container" id=container>
+  <button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="showModal(null, 'create')">
+    Create Student
+  </button>
+  <div class="grid grid-cols-3">
+    <div *ngFor="let student of students" class="m-4 bg-indigo-100 p-4">
+      <h1>{{student?.name}}</h1>
+      <label class="block">{{student?.email}}</label>
+      <label class="block">{{student?.dob}}</label>
+      <label class="block">{{student?.age}}</label>
+      <div>
+        <span class="pr-4"><button (click)="showModal(student, 'edit')" class="text-green-400">Edit</button></span>
+        <span><button (click)="showModal(student, 'delete')" class="text-red-600">Delete</button></span>
+      </div>
+    </div>
+  </div>
+  <!-- Create Modal -->
+  <div class="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center" id="create">
+    <div class="relative w-auto my-6 mx-auto max-w-3xl">
+      <!--content-->
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+          <h3 class="text-3xl font-semibold">
+            Modal Title
+      </h3>
+          <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onclick="closeModal('create')">
+            <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+              ×
+            </span>
+          </button>
+        </div>
+        <!--body-->
+        <div class="relative p-6 flex-auto">
+    <form id="addForm" method="post" #addForm="ngForm" (ngSubmit)="addStudent(addForm)">
+      <label for="name" class="block">Name
+        <input ngModel type="text" name="name" class="border-gray-200 border-2 m-4">
+      </label>
+      <label for="email" class="block">Email
+        <input ngModel  type="email" name="email" class="border-gray-200 border-2 m-4">
+      </label>
+      <label for="dob" class="block">dob
+        <input ngModel type="date" name="dob" class="border-gray-200 border-2 m-4">
+      </label>
+      <label for="submit" class="block" class="m-4">
+      </label>
+    </form>
+  </div>
+  <!--footer-->
+  <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+    <button type="submit" class="btext-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-15" form="addForm">Save</button>
+    <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="closeModal('create')">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Update Modal -->
+  <div class="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center" id="edit">
+    <div class="relative w-auto my-6 mx-auto max-w-3xl">
+      <!--content-->
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+          <h3 class="text-3xl font-semibold">
+            Modal Title
+      </h3>
+          <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onclick="closeModal('edit')">
+            <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+              ×
+            </span>
+          </button>
+        </div>
+        <!--body-->
+        <div class="relative p-6 flex-auto">
+    <form action="" method="post" #editForm="ngForm" (ngSubmit)="editStudent(editForm.value, this.editstudent?.id)">
+      <label for="name" class="block">Name
+        <input ngModel="{{editstudent?.name}}" type="text" name="name" class="border-gray-200 border-2 m-4">
+      </label>
+      <label for="email" class="block">Email
+        <input ngModel="{{editstudent?.email}}"  type="email" name="email" class="border-gray-200 border-2 m-4">
+      </label>
+      <label for="dob" class="block">dob
+        <input ngModel="{{editstudent?.dob}}" type="date" name="dob" class="border-gray-200 border-2 m-4">
+      </label>
+      <label for="submit" class="block" class="m-4">
+        <button type="submit" class="bg-blue-300 px-2 rounded-sm text-white">Save</button>
+      </label>
+    </form>
+        </div>
+        <!--footer-->
+        <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+          <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="closeModal('edit')">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Update Modal -->
+    <div class="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center" id="delete">
+      <div class="relative w-auto my-6 mx-auto max-w-3xl">
+        <!--content-->
+        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          <!--header-->
+          <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+            <h3 class="text-3xl font-semibold">
+              Modal Title
+        </h3>
+            <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" onclick="closeModal('edit')">
+              <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                ×
+              </span>
+            </button>
+          </div>
+          <!--body-->
+          <div class="relative p-6 flex-auto">
+              <div>
+                Do you want to delete it?
+              </div>
+            </div>
+            <!--footer-->
+            <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+            <button (click)="removeStudent(this.deletedId)" class="bg-indigo-400 text-white ">Delete</button>
+            <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="closeModal('delete')">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-id-backdrop"></div>
+</div>
+

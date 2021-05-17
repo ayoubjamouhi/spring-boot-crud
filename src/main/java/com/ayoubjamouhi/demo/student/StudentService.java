@@ -1,9 +1,12 @@
 package com.ayoubjamouhi.demo.student;
 
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +20,7 @@ public class StudentService {
     }
 
     public List<Student> getStudents() {
-        return studentRepository.findAll();
+        return this.studentRepository.findAll();
     }
 
     public Student addNewStudent(Student student) {
@@ -37,14 +40,17 @@ public class StudentService {
     }
 
     @Transactional
-    public void updateStudent(Long studentId, String name, String email) {
+    public void updateStudent(Long studentId, String name, String email, String dob) {
+        LocalDate newDob = LocalDate.parse(dob);
         Optional<Student> studentById = Optional.ofNullable(studentRepository.findById(studentId).orElseThrow(() -> new IllegalStateException("Not exist")));
         if (studentById.isPresent() && !name.equals(studentById.get().getName())) {
             studentById.get().setName(name);
         }
         if (studentById.isPresent() && !email.equals(studentById.get().getEmail())) {
-
             studentById.get().setEmail(email);
+        }
+        if (studentById.isPresent() && !newDob.equals(studentById.get().getDob())) {
+            studentById.get().setDob(newDob);
         }
     }
 }

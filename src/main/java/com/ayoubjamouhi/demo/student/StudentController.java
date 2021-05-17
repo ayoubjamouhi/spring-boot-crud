@@ -1,9 +1,10 @@
 package com.ayoubjamouhi.demo.student;
 
-import com.fasterxml.jackson.core.util.RequestPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class StudentController {
 
     @PutMapping(path="{studentId}")
     // RquestParam means ?name=xxx&email=xxx
-    public void editStudent(@PathVariable Long studentId, @RequestParam String name, @RequestParam String email){
-       this.studentService.updateStudent(studentId, name, email);
+    public void editStudent(@PathVariable Long studentId, @RequestParam String name, @RequestParam String email, @RequestParam String dob){
+       this.studentService.updateStudent(studentId, name, email, dob);
     }
 }
